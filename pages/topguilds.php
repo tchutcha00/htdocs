@@ -1,0 +1,1 @@
+<font color="black">No momento o TOP GUILDS somente no site esta em manutencao e esta desativado.</font>

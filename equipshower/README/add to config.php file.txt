@@ -1,0 +1,5 @@
+//Add this anywhere you like in the htdocs/config/config.php file
+
+//Equip Shower Config
+$config['site']['show_soul'] = 1; // 0-No / 1-Yes
+$config['site']['show_cap'] = 1; // 0-No / 1-Yes

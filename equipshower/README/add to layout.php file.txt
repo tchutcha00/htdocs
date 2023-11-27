@@ -1,0 +1,4 @@
+//Add this below: <head>
+
+<link rel="stylesheet" type="text/css" href="equipshower/js/tooltip.css" />
+<script src='equipshower/js/tooltip.js'></script>

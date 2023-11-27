@@ -1,0 +1,126 @@
+//Find: //equipment shower by ballack13
+//highlight from there down till you reach: $main_content .= '</tr></TABLE></td>';
+//replace all of the selected code with the code in this file below
+
+Code:
+/// Beginning of the EQ SHOWER created by Stefanhaan modified by Kavvson, Teh Maverick, and TomCrusher ///
+include 'equipshower/eqshower-config.php';
+
+/// Query + functions ///
+	$id = $player->getCustomField("id");
+    $items = $SQL->query("SELECT `itemtype`, `pid` FROM `player_items` WHERE `player_id`= ".$id." AND `pid` <= 10;")->fetchAll();
+
+    foreach($items as $result)
+    {
+        $item[$result['pid']]['img'] = "<img src='images/items/{$result['itemtype']}.gif' alt='{$result['itemtype']}' />";
+        $item[$result['pid']]['id']=$result['itemtype'];
+        $class[$result['pid']]="a0-{$result['pid']}";
+    }
+    $EQShower=new EQShower;
+    
+    for($i=1;$i<=10;$i++)
+    {
+        $num_attr=0;
+        unset($val);$val=array();
+        $query=mysql_query("SELECT * FROM `s_items` INNER JOIN `s_attributes` ON s_items.id=s_attributes.item_id WHERE s_items.itemid=".$item[$i]['id']);
+        if($query)$result=mysql_fetch_assoc($query);
+        
+        $val[0]=ucfirst($result['name']);
+        $val[1]=$result['descr'];
+        $val[2]=$result['armor'];
+        $val[3]=$result['weight'];
+        $val[4]=$result['containerSize'];
+        $val[5]=$result['attack'];
+        $val[6]=$result['speed'];
+        $val[7]=$result['defense'];
+        $val[8]=$result['elementFire'];
+        $val[9]=$result['elementIce'];
+        $val[10]=$result['elementEarth'];
+        $val[11]=$result['elementEnergy'];
+        $val[12]=$result['range'];
+        $val[13]=$result['extraDef'];
+        $val[14]=$result['skillShield'];
+        $val[15]=$result['magicLevelPoints'];
+        $val[16]=$result['absorbPercentall'];
+        $val[17]=$result['charges'];
+        $val[18]=$result['skillDist'];
+        $val[19]=$result['absorbPercentFire'];
+        $val[20]=$result['absorbPercentEarth'];
+        $val[21]=$result['absorbPercentIce'];
+        $val[22]=$result['absorbPercentEnergy'];
+        $val[23]=$result['absorbPercentDeath'];
+        $val[24]=$result['absorbPercentHoly'];
+        $val[25]=$result['absorbPercentPhysical'];
+        $val[26]=$result['skillAxe'];
+        $val[27]=$result['skillClub'];
+        $val[28]=$result['skillSword'];
+        $val[29]=$result['duration'];
+        $val[30]=$result['skillFist'];
+        $val[31]=$result['absorbPercentManaDrain'];
+        $val[32]=$result['absorbPercentLifeDrain'];
+        $val[33]=$result['preventDrop'];
+        $val[34]=$result['hitChance'];
+        $val[35]=$result['shootType'];
+        
+        foreach($val as $attribute)
+        {
+            if(!empty($attribute))$num_attr++;
+        }
+		
+        $tooltip[$i]=$EQShower->item_info($val,$num_attr);
+        
+        if(empty($item[$i])){
+        $class[$i]="a".$i;
+        $tooltip[$i]="<font class=\'attr\'>Empty item slot.</font>";
+        }
+    }
+
+$id = $player->getCustomField("id");
+$main_content .= '<td align=center><table with=100% style="border: solid 1px #888888;" class="darkBorder" CELLSPACING="1"><TR class="darkBorder"><br></br>';        
+
+            $main_content .= '<div id="bg">
+    <div class="col1">
+        <div class="'.$class['2'].'" onmouseover="tooltip.show(\''.$tooltip[2].'\', 225)" onmouseout="tooltip.hide()">  
+            '.$item['2']['img'].'   
+        </div>
+        <div class="'.$class['6'].'" onmouseover="tooltip.show(\''.$tooltip[6].'\', 225)" onmouseout="tooltip.hide()">  
+            '.$item['6']['img'].'   
+        </div>
+        <div class="'.$class['9'].'" onmouseover="tooltip.show(\''.$tooltip[9].'\', 225)" onmouseout="tooltip.hide()">  
+            '.$item['9']['img'].'   
+        </div>';
+		if($config['site']['show_soul'] == 1){
+			$main_content .= '<div style="background-color: '.$config['site']['darkborder'].'; text-align: center;">Soul:<br/>'.$player->getSoul().'
+        </div>';}
+    $main_content .= '</div>
+    <div class="col2">
+        <div class="'.$class['1'].'" onmouseover="tooltip.show(\''.$tooltip[1].'\', 225)" onmouseout="tooltip.hide()">  
+            '.$item['1']['img'].'   
+        </div>
+        <div class="'.$class['4'].'" onmouseover="tooltip.show(\''.$tooltip[4].'\', 225)" onmouseout="tooltip.hide()">  
+            '.$item['4']['img'].'   
+        </div>
+        <div class="'.$class['7'].'" onmouseover="tooltip.show(\''.$tooltip[7].'\', 225)" onmouseout="tooltip.hide()">  
+            '.$item['7']['img'].'   
+        </div>
+        <div class="'.$class['8'].'" onmouseover="tooltip.show(\''.$tooltip[8].'\', 225)" onmouseout="tooltip.hide()">  
+            '.$item['8']['img'].'   
+        </div>
+    </div>
+    <div class="col3">
+        <div class="'.$class['3'].'" onmouseover="tooltip.show(\''.$tooltip[3].'\', 225)" onmouseout="tooltip.hide()">  
+            '.$item['3']['img'].'   
+        </div>
+        <div class="'.$class['5'].'" onmouseover="tooltip.show(\''.$tooltip[5].'\', 225)" onmouseout="tooltip.hide()">  
+            '.$item['5']['img'].'   
+        </div>
+        <div class="'.$class['10'].'" onmouseover="tooltip.show(\''.$tooltip[10].'\', 225)" onmouseout="tooltip.hide()">  
+            '.$item['10']['img'].'   
+        </div>';
+		if($config['site']['show_cap'] == 1){
+			$main_content .= '<div style="background-color: '.$config['site']['darkborder'].'; text-align: center;">Cap:<br/>'.$player->getCap().'
+			</div>';}
+$main_content .= '</div>
+</div>';
+	$main_content .= '</TABLE></td>';
+	//End Equipshower
